@@ -1,11 +1,15 @@
 package com.team12.myopensecret
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -14,29 +18,22 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarToggle: ActionBarDrawerToggle
     private lateinit var navView: NavigationView
+    private lateinit var addEntryButton: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Call findViewById on the DrawerLayout
         drawerLayout = findViewById(R.id.drawerLayout)
+        navView = findViewById(R.id.navView)
+        addEntryButton = findViewById(R.id.add_entry_button)
 
-        // Pass the ActionBarToggle action into the drawerListener
         actionBarToggle = ActionBarDrawerToggle(this, drawerLayout, 0, 0)
         drawerLayout.addDrawerListener(actionBarToggle)
-
-        // Display the hamburger icon to launch the drawer
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Call syncState() on the action bar so it'll automatically change to the back button when the drawer layout is open
         actionBarToggle.syncState()
 
-
-        // Call findViewById on the NavigationView
-        navView = findViewById(R.id.navView)
-
-        // Call setNavigationItemSelectedListener on the NavigationView to detect when items are clicked
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.myProfile -> {
@@ -51,6 +48,28 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
+        }
+        addEntryButton.setOnClickListener { clickedItem ->
+            when (clickedItem.id) {
+                R.id.add_entry_button -> {
+                    val intent = Intent(this, NewEntryActivity::class.java)
+                    startActivityForResult(intent, 0)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0 && resultCode == 1) {
+            Log.d("yoo","bruh")
+        } else if (requestCode == 0 && resultCode == 0) {
+            Log.d("yoo", "unlucky")
         }
     }
 

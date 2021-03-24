@@ -33,7 +33,7 @@
         android:backgroundTint="@color/light_blue"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:id="@+id/fab3"
+        android:id="@+id/add_entry_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
