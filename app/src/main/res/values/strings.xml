@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Open Secret</string>
+    <string name="tags">Tags</string>
+    <string name="data_fields">Data Fields</string>
+</resources>
