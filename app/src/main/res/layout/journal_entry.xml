@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="70dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Entry Title really long text lets seee how ti works"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="70dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Preview of first few words rally long text testing some things"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Chips can be declared here, or added dynamically. -->
+        <!-- will be removed when dynamically adding chips work-->
+        <com.google.android.material.chip.Chip
+            android:background="@color/light_blue"
+            android:id="@+id/chip"
+            app:chipBackgroundColor="@color/yellow"
+            app:chipStrokeWidth="2dp"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Diary"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip2"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            app:chipBackgroundColor="@color/green"
+            app:chipStrokeWidth="2dp"
+            android:layout_height="wrap_content"
+            android:text="Other Tag"/>
+    </com.google.android.material.chip.ChipGroup>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_grey"/>
+
+</LinearLayout>
