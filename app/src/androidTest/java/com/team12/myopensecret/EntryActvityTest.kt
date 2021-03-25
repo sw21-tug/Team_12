@@ -30,36 +30,30 @@ class EntryActvityTest {
 
     @Before
     fun initValidString() {
-        // Specify a valid string.
         onView(withId(R.id.add_entry_button)).perform(click())
         stringToBetyped = "randomText"
     }
 
     @Test
     fun typingTitleTest() {
-        // Type text and then press the button.
         onView(withId(R.id.title_field))
             .perform(typeText(stringToBetyped), closeSoftKeyboard())
 
-        // Check that the text was changed.
         onView(withId(R.id.title_field))
             .check(matches(withText(stringToBetyped)))
     }
 
     @Test
     fun typingNotesTest() {
-        // Type text and then press the button.
         onView(withId(R.id.notes_field))
             .perform(typeText(stringToBetyped), closeSoftKeyboard())
 
-        // Check that the text was changed.
         onView(withId(R.id.notes_field))
             .check(matches(withText(stringToBetyped)))
     }
 
     @Test
     fun typingNotEnoughTitleTest() {
-        // Type text and then press the button.
         stringToBetyped = "oof"
         onView(withId(R.id.title_field))
             .perform(typeText(stringToBetyped), closeSoftKeyboard())
@@ -71,7 +65,6 @@ class EntryActvityTest {
 
     @Test
     fun typingNotEnoughNotesTest() {
-        // Type text and then press the button.
         stringToBetyped = "oof"
         onView(withId(R.id.title_field))
             .perform(typeText(stringToBetyped), closeSoftKeyboard())

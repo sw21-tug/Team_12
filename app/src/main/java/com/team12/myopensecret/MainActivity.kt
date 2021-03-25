@@ -49,12 +49,12 @@ class MainActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.myProfile -> {
-                    Toast.makeText(this, "My Profile", Toast.LENGTH_SHORT).show()
+                R.id.labels_button -> {
+                    // do sth
                     true
                 }
-                R.id.people -> {
-                    Toast.makeText(this, "People", Toast.LENGTH_SHORT).show()
+                R.id.data_fields_button -> {
+                    // do
                     true
                 }
                 else -> {
@@ -99,7 +99,10 @@ class MainActivity : AppCompatActivity() {
     private fun addToJournalsList(data: JournalDataEntry) {
         var journalView: View = layoutInflater.inflate(R.layout.journal_entry, entryList, false)
         journalView.findViewById<TextView>(R.id.journal_title).text = (data.title)
-        journalView.findViewById<TextView>(R.id.journal_description).text = (data.description)
+        var desc = data.description
+        if (desc.length > 80)
+            desc = desc.substring(0, 80) + "..."
+        journalView.findViewById<TextView>(R.id.journal_description).text = desc
         data.labels.forEach {
             addLabelToGroup(it, journalView.findViewById<ChipGroup>(R.id.journal_chips))
         }
