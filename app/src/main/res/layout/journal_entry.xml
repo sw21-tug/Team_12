@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_height="wrap_content">
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/journal_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -17,7 +17,7 @@
         android:textColor="@android:color/black"
         android:textSize="24sp" />
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/journal_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -29,7 +29,7 @@
         android:textSize="18sp" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+        android:id="@+id/journal_chips"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="70dp"
         android:layout_width="match_parent"

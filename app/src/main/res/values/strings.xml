@@ -7,4 +7,6 @@
     <string name="notes">Notes</string>
     <string name="add_field">Add Field</string>
     <string name="add_attachment">Add Attachment</string>
+    <string name="need5chars">Need at least 5 Characters</string>
+    <string name="need20chars">Need at least 20 Characters</string>
 </resources>
