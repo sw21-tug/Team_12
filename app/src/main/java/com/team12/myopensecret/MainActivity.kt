@@ -1,6 +1,8 @@
 package com.team12.myopensecret
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +14,8 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
@@ -23,8 +27,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var addEntryButton: FloatingActionButton
     private lateinit var entryList: LinearLayout
 
-    private lateinit var dataBase: DataBaseHelper
-
+    companion object {
+        lateinit var dataBase: DataBaseHelper
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -69,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        createDefaultLabels() // delete later if labels can be created
         loadJournals()
     }
 
@@ -94,11 +100,38 @@ class MainActivity : AppCompatActivity() {
         var journalView: View = layoutInflater.inflate(R.layout.journal_entry, entryList, false)
         journalView.findViewById<TextView>(R.id.journal_title).text = (data.title)
         journalView.findViewById<TextView>(R.id.journal_description).text = (data.description)
-        entryList.addView(journalView)
+        data.labels.forEach {
+            addLabelToGroup(it, journalView.findViewById<ChipGroup>(R.id.journal_chips))
+        }
+
+        entryList.addView(journalView, 0)
+    }
+
+    private fun addLabelToGroup(label: LabelData, chipGroup: ChipGroup) {
+        var labelChip = Chip(this)
+        labelChip.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor(label.color))
+        labelChip.text = label.name
+        labelChip.isClickable = false
+        labelChip.chipStrokeWidth = 5f
+        labelChip.chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black))
+        chipGroup.addView(labelChip)
+    }
+
+    private fun createDefaultLabels() {
+        // create some labels
+        if (dataBase.viewLabelEntries().isNotEmpty())
+            return
+        dataBase.addLabelEntry(LabelData("Diary","#FFEB3B", -1))
+        dataBase.addLabelEntry(LabelData("Discovery","#F44336", -1))
+        dataBase.addLabelEntry(LabelData("Top-Secret","#8BC34A", -1))
+        dataBase.addLabelEntry(LabelData("Measurement","#03A9F4", -1))
+        dataBase.addLabelEntry(LabelData("Log","#FFBB86FC", -1))
+        dataBase.addLabelEntry(LabelData("Disaster","#FF03DAC5", -1))
     }
 
     private fun loadJournals() {
         val journals = dataBase.viewJournalEntries()
+        journals.reversed()
         journals.forEach {
             addToJournalsList(it)
         }

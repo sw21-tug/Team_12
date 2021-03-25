@@ -35,27 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Chips can be declared here, or added dynamically. -->
-        <!-- will be removed when dynamically adding chips work-->
-        <com.google.android.material.chip.Chip
-            android:background="@color/light_blue"
-            android:id="@+id/chip"
-            app:chipBackgroundColor="@color/yellow"
-            app:chipStrokeWidth="2dp"
-            app:chipStrokeColor="@color/black"
-            android:clickable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Diary"/>
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip2"
-            android:clickable="false"
-            android:layout_width="wrap_content"
-            app:chipStrokeColor="@color/black"
-            app:chipBackgroundColor="@color/green"
-            app:chipStrokeWidth="2dp"
-            android:layout_height="wrap_content"
-            android:text="Other Tag"/>
     </com.google.android.material.chip.ChipGroup>
     <View
         android:layout_width="match_parent"

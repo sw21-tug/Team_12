@@ -43,74 +43,6 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 app:chipSpacing="10dp">
-
-            <com.google.android.material.chip.Chip
-                android:background="@color/light_blue"
-                android:id="@+id/chip123"
-                app:chipBackgroundColor="@color/yellow"
-                app:chipStrokeWidth="2dp"
-                app:chipStrokeColor="@color/black"
-                android:checkable="true"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Diary"/>
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip5"
-                android:checkable="true"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_width="wrap_content"
-                app:chipStrokeColor="@color/black"
-                app:chipBackgroundColor="@color/green"
-                app:chipStrokeWidth="2dp"
-                android:layout_height="wrap_content"
-                android:text="Other Tag"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip4"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_width="wrap_content"
-                    app:chipStrokeColor="@color/black"
-                    app:chipBackgroundColor="@color/light_blue"
-                    app:chipStrokeWidth="2dp"
-                    android:layout_height="wrap_content"
-                    android:text="Other Tag2"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip6"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_width="wrap_content"
-                    app:chipStrokeColor="@color/black"
-                    app:chipBackgroundColor="@color/red"
-                    app:chipStrokeWidth="2dp"
-                    android:layout_height="wrap_content"
-                    android:text="Other Tag3"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip8"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_width="wrap_content"
-                    app:chipStrokeColor="@color/black"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipStrokeWidth="2dp"
-                    android:layout_height="wrap_content"
-                    android:text="Other Tag4"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip7"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_width="wrap_content"
-                    app:chipStrokeColor="@color/black"
-                    app:chipBackgroundColor="@color/green"
-                    app:chipStrokeWidth="2dp"
-                    android:layout_height="wrap_content"
-                    android:text="Other Tag5"/>
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
@@ -124,6 +56,7 @@
             android:background="@drawable/custom_edit_text"
             android:drawableStart="@drawable/selector_notes"
             android:drawablePadding="12dp"
+            android:maxLength="1000"
             android:hint="Notes"
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />

@@ -1,16 +1,23 @@
 package com.team12.myopensecret
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 class NewEntryActivity : AppCompatActivity() {
 
     private lateinit var titleField: EditText
     private lateinit var notesField: EditText
+    private lateinit var labelsGroup: ChipGroup
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +25,30 @@ class NewEntryActivity : AppCompatActivity() {
 
         titleField = findViewById(R.id.title_field)
         notesField = findViewById(R.id.notes_field)
+        labelsGroup = findViewById(R.id.chipsPrograms)
+
+        loadChips()
+    }
+
+    private fun loadChips() {
+        var labels = MainActivity.dataBase.viewLabelEntries()
+        labels.forEach() {
+            addLabelToGroup(it)
+        }
+    }
+
+    private fun addLabelToGroup(label: LabelData) {
+        var labelChip = Chip(this)
+        labelChip.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor(label.color))
+        labelChip.text = label.name
+        labelChip.isFocusable = true
+        labelChip.isClickable = true
+        labelChip.isCheckable = true
+        labelChip.chipStrokeWidth = 5f
+        labelChip.id = View.generateViewId()
+        labelChip.chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black))
+        labelChip.tag = label
+        labelsGroup.addView(labelChip)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -51,8 +82,11 @@ class NewEntryActivity : AppCompatActivity() {
         }
         if (hasError)
             return
-        
-        intent.putExtra("JOURNAL_ENTRY", JournalDataEntry(title,notes,ArrayList(), -1))
+        var selectedLabels = ArrayList<LabelData>()
+        labelsGroup.checkedChipIds.forEach{
+            selectedLabels.add(findViewById<Chip>(it).tag as LabelData)
+        }
+        intent.putExtra("JOURNAL_ENTRY", JournalDataEntry(title,notes,selectedLabels, -1))
         setResult(1, intent)
         finish()
     }
