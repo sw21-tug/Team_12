@@ -2,4 +2,11 @@
     <string name="app_name">My Open Secret</string>
     <string name="tags">Tags</string>
     <string name="data_fields">Data Fields</string>
+    <string name="new_entry">New Entry</string>
+    <string name="title">Title</string>
+    <string name="notes">Notes</string>
+    <string name="add_field">Add Field</string>
+    <string name="add_attachment">Add Attachment</string>
+    <string name="need5chars">Need at least 5 Characters</string>
+    <string name="need20chars">Need at least 20 Characters</string>
 </resources>

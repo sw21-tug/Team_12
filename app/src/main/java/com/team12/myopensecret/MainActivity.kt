@@ -1,56 +1,142 @@
 package com.team12.myopensecret
 
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    // Initialise the DrawerLayout, NavigationView and ToggleBar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarToggle: ActionBarDrawerToggle
     private lateinit var navView: NavigationView
+    private lateinit var addEntryButton: FloatingActionButton
+    private lateinit var entryList: LinearLayout
 
+    companion object {
+        lateinit var dataBase: DataBaseHelper
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Call findViewById on the DrawerLayout
         drawerLayout = findViewById(R.id.drawerLayout)
+        navView = findViewById(R.id.navView)
+        addEntryButton = findViewById(R.id.add_entry_button)
+        entryList = findViewById(R.id.entry_list)
 
-        // Pass the ActionBarToggle action into the drawerListener
+        dataBase =  DataBaseHelper(this)
+
         actionBarToggle = ActionBarDrawerToggle(this, drawerLayout, 0, 0)
         drawerLayout.addDrawerListener(actionBarToggle)
-
-        // Display the hamburger icon to launch the drawer
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Call syncState() on the action bar so it'll automatically change to the back button when the drawer layout is open
         actionBarToggle.syncState()
 
-
-        // Call findViewById on the NavigationView
-        navView = findViewById(R.id.navView)
-
-        // Call setNavigationItemSelectedListener on the NavigationView to detect when items are clicked
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.myProfile -> {
-                    Toast.makeText(this, "My Profile", Toast.LENGTH_SHORT).show()
+                R.id.labels_button -> {
+                    // do sth
                     true
                 }
-                R.id.people -> {
-                    Toast.makeText(this, "People", Toast.LENGTH_SHORT).show()
+                R.id.data_fields_button -> {
+                    // do
                     true
                 }
                 else -> {
                     false
                 }
             }
+        }
+        addEntryButton.setOnClickListener { clickedItem ->
+            when (clickedItem.id) {
+                R.id.add_entry_button -> {
+                    val intent = Intent(this, NewEntryActivity::class.java)
+                    startActivityForResult(intent, 0)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+        createDefaultLabels() // delete later if labels can be created
+        loadJournals()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0 && resultCode == 1) {
+            if (data != null) {
+                var dataEntry = data.extras?.getSerializable("JOURNAL_ENTRY") as JournalDataEntry
+                val suc = dataBase.addJournalEntry(dataEntry)
+                if (suc.toInt() == -1) {
+                    Toast.makeText(this, "Failed Inserting into Database", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                addToJournalsList(dataEntry)
+            }
+        } else if (requestCode == 0 && resultCode == 0) {
+            // new journal got canceled
+        }
+    }
+
+    private fun addToJournalsList(data: JournalDataEntry) {
+        var journalView: View = layoutInflater.inflate(R.layout.journal_entry, entryList, false)
+        journalView.findViewById<TextView>(R.id.journal_title).text = (data.title)
+        var desc = data.description
+        if (desc.length > 80)
+            desc = desc.substring(0, 80) + "..."
+        journalView.findViewById<TextView>(R.id.journal_description).text = desc
+        data.labels.forEach {
+            addLabelToGroup(it, journalView.findViewById<ChipGroup>(R.id.journal_chips))
+        }
+
+        entryList.addView(journalView, 0)
+    }
+
+    private fun addLabelToGroup(label: LabelData, chipGroup: ChipGroup) {
+        var labelChip = Chip(this)
+        labelChip.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor(label.color))
+        labelChip.text = label.name
+        labelChip.isClickable = false
+        labelChip.chipStrokeWidth = 5f
+        labelChip.chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black))
+        chipGroup.addView(labelChip)
+    }
+
+    private fun createDefaultLabels() {
+        // create some labels
+        if (dataBase.viewLabelEntries().isNotEmpty())
+            return
+        dataBase.addLabelEntry(LabelData("Diary","#FFEB3B", -1))
+        dataBase.addLabelEntry(LabelData("Discovery","#F44336", -1))
+        dataBase.addLabelEntry(LabelData("Top-Secret","#8BC34A", -1))
+        dataBase.addLabelEntry(LabelData("Measurement","#03A9F4", -1))
+        dataBase.addLabelEntry(LabelData("Log","#FFBB86FC", -1))
+        dataBase.addLabelEntry(LabelData("Disaster","#FF03DAC5", -1))
+    }
+
+    private fun loadJournals() {
+        val journals = dataBase.viewJournalEntries()
+        journals.reversed()
+        journals.forEach {
+            addToJournalsList(it)
         }
     }
 
@@ -63,7 +149,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    // override the onBackPressed() function to close the Drawer when the back button is clicked
     override fun onBackPressed() {
         if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             this.drawerLayout.closeDrawer(GravityCompat.START)
