@@ -106,7 +106,12 @@ class MainActivity : AppCompatActivity() {
         data.labels.forEach {
             addLabelToGroup(it, journalView.findViewById<ChipGroup>(R.id.journal_chips))
         }
+        journalView.setOnClickListener{
+            val intent = Intent(this, ViewEntryActivity::class.java)
+            intent.putExtra("data", data)
+            startActivityForResult(intent, 0)
 
+        }
         entryList.addView(journalView, 0)
     }
 

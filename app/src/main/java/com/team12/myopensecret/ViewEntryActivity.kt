@@ -18,8 +18,8 @@ class ViewEntryActivity: AppCompatActivity() {
         titleField = findViewById(R.id.title_view)
         descriptionField = findViewById(R.id.description_view)
         chipsField = findViewById(R.id.chipsView)
-        var dataEntry = intent.extras?.getSerializable("JOURNAL_ENTRY") as JournalDataEntry
-        titleField.text = dataEntry.title
-        descriptionField.text = dataEntry.description
+        //var dataEntry = intent.extras?.getSerializable("JOURNAL_ENTRY") as JournalDataEntry
+        //titleField.text = dataEntry.title
+        //descriptionField.text = dataEntry.description
     }
 }
