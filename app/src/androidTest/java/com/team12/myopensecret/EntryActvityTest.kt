@@ -74,6 +74,17 @@ class EntryActvityTest {
         onView(allOf(withId(R.id.notes_field), isDisplayed())).check(matches(not(hasNoErrorText())));
     }
 
+    @Test
+    fun typingTooMuchTitle() {
+        stringToBetyped = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxy"
+        onView(withId(R.id.title_field))
+            .perform(typeText(stringToBetyped), closeSoftKeyboard())
+
+        onView(withId(R.id.accept_entry)).perform(click())
+
+        onView(allOf(withId(R.id.title_field), isDisplayed())).check(matches(not(hasNoErrorText())));
+
+    }
     fun hasNoErrorText(): Matcher<View?>? {
         return object : BoundedMatcher<View?, EditText>(EditText::class.java) {
             override fun describeTo(description: Description) {

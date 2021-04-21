@@ -76,6 +76,10 @@ class NewEntryActivity : AppCompatActivity() {
             titleField.error = "Need at least 5 Characters"
             hasError = true
         }
+        if (title.length > 50) {
+            titleField.error = "Too many Characters"
+            hasError = true
+        }
         if (notes.length < 20) {
             notesField.error = "Need at least 20 Characters"
             hasError = true
