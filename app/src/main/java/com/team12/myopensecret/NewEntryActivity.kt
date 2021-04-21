@@ -88,7 +88,12 @@ class NewEntryActivity : AppCompatActivity() {
             notesField.error = "Too many Characters (max. 200)"
             hasError = true
         }
-        if (hasError)
+        var hasSelectedChip = false
+        labelsGroup.checkedChipIds.forEach{
+            hasSelectedChip = true
+        }
+
+        if (hasError || !hasSelectedChip)
             return
         var selectedLabels = ArrayList<LabelData>()
         labelsGroup.checkedChipIds.forEach{
