@@ -90,7 +90,7 @@ class EntryActvityTest {
         stringToBetyped = "abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy" +
                 "abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy" +
                 "abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy" +
-                "abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy"
+                "abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyz"
         onView(withId(R.id.notes_field))
                 .perform(typeText(stringToBetyped), closeSoftKeyboard())
 
