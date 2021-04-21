@@ -77,11 +77,15 @@ class NewEntryActivity : AppCompatActivity() {
             hasError = true
         }
         if (title.length > 50) {
-            titleField.error = "Too many Characters"
+            titleField.error = "Too many Characters (max. 50)"
             hasError = true
         }
         if (notes.length < 20) {
             notesField.error = "Need at least 20 Characters"
+            hasError = true
+        }
+        if (notes.length > 200) {
+            notesField.error = "Too many Characters (max. 200)"
             hasError = true
         }
         if (hasError)
