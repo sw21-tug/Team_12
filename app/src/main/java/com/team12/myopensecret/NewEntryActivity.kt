@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.chip.Chip
@@ -92,8 +93,14 @@ class NewEntryActivity : AppCompatActivity() {
         labelsGroup.checkedChipIds.forEach{
             hasSelectedChip = true
         }
-
-        if (hasError || !hasSelectedChip)
+        val category = "Please choose a category!"
+        val length = Toast.LENGTH_SHORT
+        if (!hasSelectedChip) {
+            val toast = Toast.makeText(applicationContext, category, length)
+            toast.show()
+            return
+        }
+        if (hasError)
             return
         var selectedLabels = ArrayList<LabelData>()
         labelsGroup.checkedChipIds.forEach{
