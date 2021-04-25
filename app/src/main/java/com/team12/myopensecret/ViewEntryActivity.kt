@@ -1,8 +1,11 @@
 package com.team12.myopensecret
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
 class ViewEntryActivity: AppCompatActivity() {
@@ -15,11 +18,30 @@ class ViewEntryActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_entry)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         titleField = findViewById(R.id.title_view)
         descriptionField = findViewById(R.id.description_view)
-        chipsField = findViewById(R.id.chipsView)
-        //var dataEntry = intent.extras?.getSerializable("JOURNAL_ENTRY") as JournalDataEntry
-        //titleField.text = dataEntry.title
-        //descriptionField.text = dataEntry.description
+        chipsField = findViewById(R.id.chips_view)
+        var dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
+        titleField.text = dataEntry.title
+        descriptionField.text = dataEntry.description
+        dataEntry.labels.forEach {
+            addLabelToGroup(it, chipsField)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    private fun addLabelToGroup(label: LabelData, chipGroup: ChipGroup) {
+        var labelChip = Chip(this)
+        labelChip.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor(label.color))
+        labelChip.text = label.name
+        labelChip.isClickable = false
+        labelChip.chipStrokeWidth = 5f
+        labelChip.chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black))
+        chipGroup.addView(labelChip)
     }
 }
