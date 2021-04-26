@@ -93,6 +93,10 @@ class MainActivity : AppCompatActivity() {
             }
         } else if (requestCode == 0 && resultCode == 0) {
             // new journal got canceled
+        } else if (requestCode == 1 && resultCode == 1) {
+            entryList.removeAllViews()
+            entryList.invalidate()
+            loadJournals()
         }
     }
 
