@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         journalView.setOnClickListener{
             val intent = Intent(this, ViewEntryActivity::class.java)
             intent.putExtra("data", data)
-            startActivityForResult(intent, 0)
+            startActivityForResult(intent, 1)
 
         }
         entryList.addView(journalView, 0)
