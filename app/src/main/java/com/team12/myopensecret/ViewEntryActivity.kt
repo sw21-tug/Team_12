@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
@@ -14,7 +15,7 @@ class ViewEntryActivity: AppCompatActivity() {
     private lateinit var titleField:TextView
     private lateinit var descriptionField:TextView
     private lateinit var chipsField:ChipGroup
-
+    private lateinit var model: JournalDataEntry
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_entry)
@@ -29,6 +30,17 @@ class ViewEntryActivity: AppCompatActivity() {
         dataEntry.labels.forEach {
             addLabelToGroup(it, chipsField)
         }
+        model = dataEntry
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.delete_entry) {
+            MainActivity.dataBase.deleteEmployee(model)
+            setResult(1)
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
