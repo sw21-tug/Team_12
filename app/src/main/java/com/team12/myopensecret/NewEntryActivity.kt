@@ -93,8 +93,6 @@ class NewEntryActivity : AppCompatActivity() {
         labelsGroup.checkedChipIds.forEach{
             hasSelectedChip = true
         }
-        
-        }
         if (hasError)
             return
         var selectedLabels = ArrayList<LabelData>()
