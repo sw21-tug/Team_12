@@ -50,8 +50,9 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.labels_button -> {
-                    // do sth
-                    true
+                        val intent = Intent(this, VIewTagActivity::class.java)
+                        startActivityForResult(intent, 0)
+                        true
                 }
                 R.id.data_fields_button -> {
                     // do
@@ -74,8 +75,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
         createDefaultLabels() // delete later if labels can be created
         loadJournals()
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
