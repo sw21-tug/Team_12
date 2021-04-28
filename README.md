@@ -37,3 +37,4 @@ Add entries
 Entry Overview
 View Entries
 Delete Entries
+Tag Entries
