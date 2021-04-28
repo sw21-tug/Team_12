@@ -93,6 +93,10 @@ class MainActivity : AppCompatActivity() {
             }
         } else if (requestCode == 0 && resultCode == 0) {
             // new journal got canceled
+        } else if (requestCode == 1 && resultCode == 1) {
+            entryList.removeAllViews()
+            entryList.invalidate()
+            loadJournals()
         }
     }
 
@@ -109,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         journalView.setOnClickListener{
             val intent = Intent(this, ViewEntryActivity::class.java)
             intent.putExtra("data", data)
-            startActivityForResult(intent, 0)
+            startActivityForResult(intent, 1)
 
         }
         entryList.addView(journalView, 0)
