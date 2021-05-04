@@ -22,12 +22,15 @@ class NewEntryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SettingsActivity.loadLocale(this)
         setContentView(R.layout.new_journal)
 
+        setTitle(R.string.new_entry)
         titleField = findViewById(R.id.title_field)
         notesField = findViewById(R.id.notes_field)
         labelsGroup = findViewById(R.id.chipsPrograms)
-
+        titleField.setHint(R.string.title)
+        notesField.setHint(R.string.notes)
         loadChips()
     }
 
@@ -74,26 +77,26 @@ class NewEntryActivity : AppCompatActivity() {
         var notes = notesField.text.toString().trim()
         var hasError = false
         if (title.length < 5) {
-            titleField.error = "Need at least 5 Characters"
+            titleField.error = resources.getString(R.string.need5chars)
             hasError = true
         }
         if (title.length > 50) {
-            titleField.error = "Too many Characters (max. 50)"
+            titleField.error = resources.getString(R.string.toomany50)
             hasError = true
         }
         if (notes.length < 20) {
-            notesField.error = "Need at least 20 Characters"
+            notesField.error = resources.getString(R.string.need20chars)
             hasError = true
         }
         if (notes.length > 200) {
-            notesField.error = "Too many Characters (max. 200)"
+            notesField.error = resources.getString(R.string.toomany200)
             hasError = true
         }
         var hasSelectedChip = false
         labelsGroup.checkedChipIds.forEach{
             hasSelectedChip = true
         }
-        val category = "Please choose a category!"
+        val category = resources.getString(R.string.choosecategory)
         val length = Toast.LENGTH_SHORT
         if (!hasSelectedChip) {
             val toast = Toast.makeText(applicationContext, category, length)
