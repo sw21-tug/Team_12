@@ -96,13 +96,6 @@ class NewEntryActivity : AppCompatActivity() {
         labelsGroup.checkedChipIds.forEach{
             hasSelectedChip = true
         }
-        val category = resources.getString(R.string.choosecategory)
-        val length = Toast.LENGTH_SHORT
-        if (!hasSelectedChip) {
-            val toast = Toast.makeText(applicationContext, category, length)
-            toast.show()
-            return
-        }
         if (hasError)
             return
         var selectedLabels = ArrayList<LabelData>()
