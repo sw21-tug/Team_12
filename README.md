@@ -38,3 +38,6 @@ Entry Overview
 View Entries
 Delete Entries
 Tag Entries
+Russian Language Support
+App Menu
+Settings Menu
