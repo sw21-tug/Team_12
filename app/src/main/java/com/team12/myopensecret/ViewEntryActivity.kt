@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -35,9 +36,18 @@ class ViewEntryActivity: AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.delete_entry) {
-            MainActivity.dataBase.deleteEmployee(model)
-            setResult(1)
-            finish()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(resources.getString(R.string.title_delete))
+            builder.setMessage(resources.getString(R.string.description_delete))
+            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                MainActivity.dataBase.deleteEmployee(model)
+                setResult(1)
+                finish()
+            }
+            builder.setNegativeButton(android.R.string.no) { dialog, which ->
+            }
+
+            builder.show()
         }
 
         return super.onOptionsItemSelected(item)
