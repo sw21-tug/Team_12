@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SettingsActivity.loadLocale(this)
         setContentView(R.layout.activity_main)
 
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -56,6 +57,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.data_fields_button -> {
                     // do
+                    true
+                }
+                R.id.settings_button -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivityForResult(intent, 2)
                     true
                 }
                 else -> {
@@ -84,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        recreate()
         if (requestCode == 0 && resultCode == 1) {
             if (data != null) {
                 var dataEntry = data.extras?.getSerializable("JOURNAL_ENTRY") as JournalDataEntry
