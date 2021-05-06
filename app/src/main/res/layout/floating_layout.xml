@@ -1,0 +1,43 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        app:shapeAppearanceOverlay="@style/fab_3_rounded"
+        app:backgroundTint="@color/purple_500"
+        app:tint="@null"
+        android:src="@drawable/ic_baseline_label_24"
+        android:layout_margin="16dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        app:shapeAppearanceOverlay="@style/fab_3_rounded"
+        android:layout_below="@id/fab1"
+        app:backgroundTint="@color/purple_500"
+        app:tint="@null"
+        android:src="@drawable/ic_baseline_filter_alt_24"
+        android:layout_margin="16dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:backgroundTint="@color/light_blue"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/add_entry_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_baseline_add_24"
+        android:layout_margin="16dp" />
+</RelativeLayout>
+</FrameLayout>
