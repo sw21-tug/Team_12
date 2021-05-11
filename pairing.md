@@ -16,6 +16,6 @@ Dev 6: Dino Ponin
 | Dev 1       | X           | 15:30       | HH:MM       | HH:MM       | HH:MM       | 16:00       |
 | Dev 2       | 15:30       | 04:00       | 12:00       | HH:MM       | HH:MM       | HH:MM       |
 | Dev 3       | HH:MM       | 12:00       | X           | 15:00       | HH:MM       | HH:MM       |
-| Dev 4       | HH:MM       | HH:MM       | 15:00       | 04:00       | 16:00       | HH:MM       |
+| Dev 4       | HH:MM       | HH:MM       | 15:00       | X           | 16:00       | HH:MM       |
 | Dev 5       | HH:MM       | HH:MM       | HH:MM       | 16:00       | X           | 16:00       |
 | Dev 6       | 16:00       | HH:MM       | HH:MM       | HH:MM       | 16:00       | X           |
