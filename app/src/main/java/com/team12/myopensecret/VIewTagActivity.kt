@@ -1,51 +1,42 @@
 package com.team12.myopensecret
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 
 class VIewTagActivity : AppCompatActivity() {
 
-    private lateinit var titleField: TextView
-    private lateinit var descriptionField: TextView
-    private lateinit var chipsField: ChipGroup
-    private lateinit var imageFiled: ImageView
-    private lateinit var model: JournalDataEntry
+    private lateinit var tagsList:LinearLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tag_overview)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        titleField = findViewById(R.id.title_view)
-        descriptionField = findViewById(R.id.description_view)
-        chipsField = findViewById(R.id.chips_view)
-        imageFiled = findViewById(R.id.imageView)
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        if (item.itemId == R.id.add_tag) {
-            MainActivity.dataBase.addJournalEntry(model)
-            setResult(1)
-            finish()
+        tagsList = findViewById(R.id.tags_list)
+        MainActivity.dataBase.viewLabelEntries().forEach{ label ->
+            addLabel(label)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
-    private fun addLabelToGroup(label: LabelData, chipGroup: ChipGroup) {
-        val labelChip = Chip(this)
-        labelChip.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor(label.color))
-        labelChip.text = label.name
-        labelChip.isClickable = false
-        labelChip.chipStrokeWidth = 5f
-        labelChip.chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black))
-        chipGroup.addView(labelChip)
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    private fun addLabel(data: LabelData) {
+        var tagLayout: View = layoutInflater.inflate(R.layout.tag_layout, tagsList, false)
+        tagLayout.findViewById<TextView>(R.id.tag_name).text = (data.name)
+        tagLayout.findViewById<ImageView>(R.id.tag_image).setOnClickListener {
+            // TODO: EDIT
+        }
+        tagLayout.findViewById<TextView>(R.id.tag_color).background.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.parseColor(data.color), BlendModeCompat.SRC_ATOP)
+        tagsList.addView(tagLayout, 0)
     }
 }

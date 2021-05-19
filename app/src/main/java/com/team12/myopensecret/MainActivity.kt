@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.labels_button -> {
                         val intent = Intent(this, VIewTagActivity::class.java)
-                        startActivityForResult(intent, 0)
+                        startActivity(intent)
                         true
                 }
                 R.id.data_fields_button -> {
