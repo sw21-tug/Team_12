@@ -41,3 +41,4 @@ Tag Entries
 Russian Language Support
 App Menu
 Settings Menu
+Tag Overview
