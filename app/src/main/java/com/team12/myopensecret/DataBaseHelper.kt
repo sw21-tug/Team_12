@@ -38,7 +38,9 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
 
         val CREATE_CONTACTS_TABLE = ("CREATE TABLE " + TABLE_JOURNALS + "("
                 + J_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + J_KEY_TITLE + " TEXT,"
-                + J_KEY_DESCRIPTION + " TEXT," + J_KEY_LABELS + " TEXT" +")")
+                + J_KEY_DESCRIPTION + " TEXT,"
+                + J_KEY_DATA_FIELDS + " TEXT,"
+                + J_KEY_LABELS + " TEXT" +")")
         db?.execSQL(CREATE_CONTACTS_TABLE)
         val CREATE_LABELS_TABLE = ("CREATE TABLE " + TABLE_LABELS + "("
                 + L_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + L_KEY_NAME + " TEXT,"
@@ -77,6 +79,16 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
             l = l.substring(0, l.length - 1);
         contentValues.put(J_KEY_LABELS, l)
 
+
+        var d: String = ""
+        jde.dfs.forEach{
+            it.dbId = addDataFieldEntry(it).toInt()
+            d += it.dbId.toString()+","
+        }
+        if (d.length > 0)
+            d = d.substring(0, d.length - 1);
+        contentValues.put(J_KEY_DATA_FIELDS, d)
+
         val id = db.insert(TABLE_JOURNALS, null, contentValues)
         db.close()
         jde.dbId = id.toInt()
@@ -101,6 +113,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
         if (cursor.moveToFirst()) {
             do {
                 var labels = ArrayList<LabelData>()
+                var dfs = ArrayList<DataFieldData>()
                 id = cursor.getInt(cursor.getColumnIndex(J_KEY_ID))
                 title = cursor.getString(cursor.getColumnIndex(J_KEY_TITLE))
                 description = cursor.getString(cursor.getColumnIndex(J_KEY_DESCRIPTION))
@@ -110,7 +123,13 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
                     if (it != "")
                         getLabelById(it.toInt())?.let { it1 -> labels.add(it1) }
                 }
-                val emp= JournalDataEntry(title, description, labels, id)
+                var dfsStr:String = cursor.getString(cursor.getColumnIndex(J_KEY_DATA_FIELDS))
+                val dfsArr = dfsStr.split(",")
+                dfsArr.forEach{
+                    if (it != "")
+                        getDataFielEntrydById(it.toInt())?.let { it1 -> dfs.add(it1) }
+                }
+                val emp= JournalDataEntry(title, description, labels, dfs, id)
                 jList.add(emp)
             } while (cursor.moveToNext())
         }
@@ -126,7 +145,6 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
         contentValues.put(D_KEY_TYPE, dataField.type)
 
         val id = db.insert(TABLE_DATAFIELDS, null, contentValues)
-        db.close()
         dataField.dfId = id.toInt()
 
         return id
@@ -139,7 +157,6 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
         contentValues.put(DE_KEY_DF, dataField.dfId)
 
         val id = db.insert(TABLE_DATAFIELDSENTRY, null, contentValues)
-        db.close()
         dataField.dbId = id.toInt()
 
         return id
@@ -187,23 +204,41 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
         return lList
     }
 
-    /*private fun getDataFieldById(id:Int):DataFieldData? {
+    private fun getDataFieldById(id:Int):DataFieldData? {
         if (id == -1)
             return null
         var db = this.readableDatabase
-        val query:String = "SELECT * from "+ TABLE_DATAFIELDS +" where "+ L_KEY_ID+"="+id
+        val query:String = "SELECT * from "+ TABLE_DATAFIELDS +" where "+ D_KEY_ID+"="+id
         var c = db.rawQuery(query,null);
         if (c != null && c.moveToFirst()) {
             val id = c.getInt(c.getColumnIndex(D_KEY_ID))
+            val keep = c.getString(c.getColumnIndex(D_KEY_ALWAYS))
             val name = c.getString(c.getColumnIndex(D_KEY_NAME))
             val type = c.getString(c.getColumnIndex(D_KEY_TYPE))
-            val value = c.getString(c.getColumnIndex(D_KEY_VALUE))
             c.close()
-
-            return DataFieldData(name, type, value, id)
+            return DataFieldData(keep, name, type, null, null, id)
         }
         return null
-    }*/
+    }
+
+    private fun getDataFielEntrydById(id:Int):DataFieldData? {
+        if (id == -1)
+            return null
+        var db = this.readableDatabase
+        val query:String = "SELECT * from "+ TABLE_DATAFIELDSENTRY +" where "+ DE_KEY_ID+"="+id
+        var c = db.rawQuery(query,null);
+        if (c != null && c.moveToFirst()) {
+            val id = c.getInt(c.getColumnIndex(DE_KEY_ID))
+            val value = c.getString(c.getColumnIndex(DE_KEY_VALUE))
+            val keydf = c.getInt(c.getColumnIndex(DE_KEY_DF))
+            val x = getDataFieldById(keydf)
+            c.close()
+            x?.dbId = id
+            x?.value = value
+            return x
+        }
+        return null
+    }
 
     fun viewLabelEntries():List<LabelData>{
         val lList:ArrayList<LabelData> = ArrayList<LabelData>()

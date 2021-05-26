@@ -32,9 +32,18 @@
             android:background="@drawable/custom_edit_text"
 
             android:drawablePadding="12dp"
-            android:maxLength="50"
+            android:maxLength="20"
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />
+        <CheckBox
+            android:id="@+id/df_new_value2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:buttonTint="@color/purple_500"
+            android:visibility="gone" />
     </LinearLayout>
         <ImageView
             android:layout_centerInParent="true"

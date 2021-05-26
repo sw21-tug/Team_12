@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,10 +12,10 @@ import android.view.ViewManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+
 
 class NewEntryActivity : AppCompatActivity() {
 
@@ -91,11 +92,13 @@ class NewEntryActivity : AppCompatActivity() {
         var dfLayout: View = layoutInflater.inflate(R.layout.add_df_layout, newList, false)
         dfLayout.tag = data
         dfLayout.findViewById<TextView>(R.id.df_new_name).text = (data.name)
-        /*dfLayout.findViewById<TextView>(R.id.df_type).text = when(data.type) {
-            "0" -> resources.getStringArray(R.array.types_array)[0]
-            "1" -> resources.getStringArray(R.array.types_array)[1]
-            else -> resources.getStringArray(R.array.types_array)[2]
-        }*/
+        val x = dfLayout.findViewById<TextView>(R.id.df_new_value)
+        val x2 = dfLayout.findViewById<TextView>(R.id.df_new_value2)
+        when(data.type) {
+            "0" -> x.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+            "2" -> {x.visibility = View.GONE; x2.visibility = View.VISIBLE}
+            else -> {}
+        }
         dfLayout.findViewById<ImageView>(R.id.delete_df).setOnClickListener {
             (dfLayout.parent as ViewManager).removeView(dfLayout)
             currentList.remove(dfLayout)
@@ -160,7 +163,22 @@ class NewEntryActivity : AppCompatActivity() {
         labelsGroup.checkedChipIds.forEach{
             selectedLabels.add(findViewById<Chip>(it).tag as LabelData)
         }
-        intent.putExtra("JOURNAL_ENTRY", JournalDataEntry(title,notes,selectedLabels, -1))
+        var selectedDataFields = ArrayList<DataFieldData>()
+        currentList.forEach{
+            val x = it.tag as DataFieldData
+            val y = it.findViewById<EditText>(R.id.df_new_value)
+            if (x.type == "2" || y.text.isNotEmpty()) {
+
+                if (x.type == "2")
+                    x.value = it.findViewById<CheckBox>(R.id.df_new_value2).isChecked.toString()
+                else {
+                    var z = y.text.toString().trim()
+                    x.value = z
+                }
+                selectedDataFields.add(x)
+            }
+        }
+        intent.putExtra("JOURNAL_ENTRY", JournalDataEntry(title, notes, selectedLabels, selectedDataFields, -1))
         setResult(1, intent)
         finish()
     }
