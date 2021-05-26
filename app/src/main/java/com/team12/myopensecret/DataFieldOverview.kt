@@ -22,6 +22,7 @@ class DataFieldOverview : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.data_field_overview)
 
+        setTitle(R.string.data_fields)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         dataList = findViewById(R.id.data_list)
         MainActivity.dataBase.viewDataFieldEntries().forEach{ df ->

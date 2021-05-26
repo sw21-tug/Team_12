@@ -20,7 +20,7 @@ class NewDataFieldEntry : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_new_data_field)
-
+        setTitle(R.string.new_df_entry)
         titleField = findViewById(R.id.data_field_name)
         checkBox = findViewById(R.id.df_checkbox)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

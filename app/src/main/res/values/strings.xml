@@ -20,6 +20,8 @@
     <string name="add_to_new">Always add to new entries</string>
     <string name="data_type">Data Type</string>
     <string name="title_df">Choose Data Field</string>
+    <string name="new_df_entry">Add Data Field</string>
+    <string name="df_name">Data Field Name</string>
     <string-array name="languages_array">
         <item>English</item>
         <item>русский</item>

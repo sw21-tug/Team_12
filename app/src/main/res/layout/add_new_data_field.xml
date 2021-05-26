@@ -23,7 +23,7 @@
             android:drawableStart="@drawable/selector_title"
             android:drawablePadding="12dp"
             android:maxLength="60"
-            android:hint="Data Field Name"
+            android:hint="@string/df_name"
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />
         <LinearLayout
