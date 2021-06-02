@@ -10,20 +10,53 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 
 class DataFieldOverview : AppCompatActivity() {
 
     private lateinit var dataList:LinearLayout
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
+    private lateinit var actionBarToggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.data_field_overview)
 
         setTitle(R.string.data_fields)
+        drawerLayout = findViewById(R.id.drawerLayout3)
+        actionBarToggle = ActionBarDrawerToggle(this, drawerLayout, 0, 0)
+        drawerLayout.addDrawerListener(actionBarToggle)
+        navView = findViewById(R.id.navView3)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBarToggle.syncState()
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.labels_button -> {
+                    val intent = Intent(this, VIewTagActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.data_fields_button -> {
+                    this.drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.settings_button -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivityForResult(intent, 2)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
         dataList = findViewById(R.id.data_list)
         MainActivity.dataBase.viewDataFieldEntries().forEach{ df ->
             addDF(df)
@@ -46,8 +79,20 @@ class DataFieldOverview : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            this.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            drawerLayout.openDrawer(navView)
+        }
         return true
+    }
+
+    override fun onBackPressed() {
+        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            this.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
