@@ -26,6 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </com.google.android.material.chip.ChipGroup>
+
+    <LinearLayout
+        android:id="@+id/overview_data_list"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+
     <TextView
         android:id="@+id/description_view"
         android:layout_width="wrap_content"

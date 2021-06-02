@@ -46,6 +46,13 @@
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
+        <LinearLayout
+            android:id="@+id/new_data_list"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+        </LinearLayout>
+
         <EditText
             android:id="@+id/notes_field"
             android:layout_width="match_parent"
@@ -68,6 +75,7 @@
         <com.google.android.material.button.MaterialButton
             android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"
+            android:id="@+id/add_df"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_field"/>
