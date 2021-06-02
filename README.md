@@ -42,3 +42,5 @@ Russian Language Support
 App Menu
 Settings Menu
 Tag Overview
+Add Custom Data Field
+Data Field Overview
