@@ -33,14 +33,14 @@ Data protection is important - no internet capabilities and local data is stored
 
 
 ## Features
-Add entries
-Entry Overview
-View Entries
-Delete Entries
-Tag Entries
-Russian Language Support
-App Menu
-Settings Menu
-Tag Overview
-Add Custom Data Field
+Add entries, 
+Entry Overview, 
+View Entries, 
+Delete Entries, 
+Tag Entries, 
+Russian Language Support, 
+App Menu, 
+Settings Menu, 
+Tag Overview, 
+Add Custom Data Field, 
 Data Field Overview
