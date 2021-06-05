@@ -4,6 +4,7 @@
     <string name="tags">теги</string>
     <string name="data_fields">поля данных</string>
     <string name="new_entry">новая запись</string>
+    <string name="edit_entry">редактировать запись</string>
     <string name="title">заглавие</string>
     <string name="notes">заметки</string>
     <string name="add_field">добавить поле</string>
