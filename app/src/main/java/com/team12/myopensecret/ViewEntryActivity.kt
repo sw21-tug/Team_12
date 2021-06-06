@@ -9,11 +9,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-private lateinit var entryList: LinearLayout
+
 
 class ViewEntryActivity: AppCompatActivity() {
 
@@ -21,6 +22,7 @@ class ViewEntryActivity: AppCompatActivity() {
     private lateinit var descriptionField:TextView
     private lateinit var chipsField:ChipGroup
     private lateinit var model: JournalDataEntry
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_entry)
@@ -29,7 +31,7 @@ class ViewEntryActivity: AppCompatActivity() {
         titleField = findViewById(R.id.title_view)
         descriptionField = findViewById(R.id.description_view)
         chipsField = findViewById(R.id.chips_view)
-        var dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
+        val dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
         titleField.text = dataEntry.title
         descriptionField.text = dataEntry.description
         dataEntry.labels.forEach {
@@ -57,6 +59,7 @@ class ViewEntryActivity: AppCompatActivity() {
         return super.onOptionsItemSelected(item)*/
         if(item.itemId == R.id.edit_entry){
             val intent = Intent(this, EditEntryActivity::class.java)
+            intent.putExtra("data", model)
             startActivityForResult(intent, 0)
         }
         return super.onOptionsItemSelected(item)
@@ -72,31 +75,37 @@ class ViewEntryActivity: AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun addToJournalsList(data: JournalDataEntry) {
-        var journalView: View = layoutInflater.inflate(R.layout.journal_entry, entryList, false)
-        journalView.findViewById<TextView>(R.id.journal_title).text = (data.title)
-        var desc = data.description
-        if (desc.length > 80)
-            desc = desc.substring(0, 80) + "..."
-        journalView.findViewById<TextView>(R.id.journal_description).text = desc
-        data.labels.forEach {
-            addLabelToGroup(it, journalView.findViewById<ChipGroup>(R.id.journal_chips))
-        }
-        journalView.setOnClickListener{
-            val intent = Intent(this, EditEntryActivity::class.java)
-            intent.putExtra("data", data)
-            startActivityForResult(intent, 1)
-
-        }
-        entryList.addView(journalView, 0)
-    }
     private fun addLabelToGroup(label: LabelData, chipGroup: ChipGroup) {
-        var labelChip = Chip(this)
+        val labelChip = Chip(this)
         labelChip.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor(label.color))
         labelChip.text = label.name
         labelChip.isClickable = false
         labelChip.chipStrokeWidth = 5f
         labelChip.chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black))
         chipGroup.addView(labelChip)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        recreate()
+        if(requestCode == 0 && resultCode == 1) {
+            if (data != null) {
+                val dataEntry = data.extras?.getSerializable("JOURNAL_ENTRY") as JournalDataEntry
+                val suc = MainActivity.dataBase.updateEmployee(dataEntry)
+                if (suc == -1) {
+                    Toast.makeText(this, "Failed Inserting into Database", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                updateView(dataEntry)
+            }
+        }
+    }
+
+    private fun updateView(dataEntry: JournalDataEntry) {
+
+        //FIXME: Doesn't update new values
+        findViewById<TextView>(R.id.title_view).text = dataEntry.title
+        findViewById<TextView>(R.id.description_view).text = dataEntry.description
+        model = dataEntry
     }
 }

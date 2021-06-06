@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
@@ -16,6 +18,7 @@ class EditEntryActivity : AppCompatActivity() {
     private lateinit var model: JournalDataEntry
     private lateinit var titleField: EditText
     private lateinit var notesField: EditText
+    private lateinit var entryList: LinearLayout
     //private lateinit var labelsGroup: ChipGroup
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +27,7 @@ class EditEntryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_entry)
         titleField = findViewById(R.id.edit_title)
         notesField = findViewById(R.id.notes_field)
+       // entryList = findViewById(R.id.entry_list)
         val dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
         titleField.setText(dataEntry.title)
         notesField.setText(dataEntry.description)
@@ -40,7 +44,7 @@ class EditEntryActivity : AppCompatActivity() {
 
         if (item.itemId == R.id.accept_entry) {
             startSuccessfulIntent()
-        } else if (item.itemId == R.id.delete_entry) {
+        } /*else if (item.itemId == R.id.delete_entry) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(resources.getString(R.string.title_delete))
             builder.setMessage(resources.getString(R.string.description_delete))
@@ -53,8 +57,22 @@ class EditEntryActivity : AppCompatActivity() {
             }
 
             builder.show()
-        }
+        }*/
         //TODO: Else for cancel
+           else if (item.itemId == R.id.cancel_editing_entry) {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(resources.getString(R.string.description_cancel))
+            builder.setPositiveButton(R.string.agree) { dialog, which ->
+                var intent = Intent()
+                intent.putExtra("JOURNAL_ENTRY", "test")
+                setResult(0, intent)
+                finish()
+            }
+            builder.setNegativeButton(R.string.disagree) { dialog, which ->
+            }
+
+            builder.show()
+        }
 
         return super.onOptionsItemSelected(item)
     }
