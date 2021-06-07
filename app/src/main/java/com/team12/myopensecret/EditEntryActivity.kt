@@ -1,6 +1,8 @@
 package com.team12.myopensecret
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -19,7 +21,7 @@ class EditEntryActivity : AppCompatActivity() {
     private lateinit var titleField: EditText
     private lateinit var notesField: EditText
     private lateinit var entryList: LinearLayout
-    //private lateinit var labelsGroup: ChipGroup
+    private lateinit var labelsGroup: ChipGroup
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +29,15 @@ class EditEntryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_entry)
         titleField = findViewById(R.id.edit_title)
         notesField = findViewById(R.id.notes_field)
-       // entryList = findViewById(R.id.entry_list)
+        labelsGroup = findViewById(R.id.edit_chips)
         val dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
         titleField.setText(dataEntry.title)
         notesField.setText(dataEntry.description)
         setTitle(R.string.edit_entry)
+        dataEntry.labels.forEach {
+            addLabelToGroup(it)
+        }
+        loadChips()
         model = dataEntry
     }
 
@@ -58,7 +64,6 @@ class EditEntryActivity : AppCompatActivity() {
 
             builder.show()
         }*/
-        //TODO: Else for cancel
            else if (item.itemId == R.id.cancel_editing_entry) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(resources.getString(R.string.description_cancel))
@@ -99,22 +104,40 @@ class EditEntryActivity : AppCompatActivity() {
             hasError = true
         }
         var hasSelectedChip = false
-        /*
-        FIXME: labelsGroup.checkedChipIds.forEach{
-             hasSelectedChip = true
-         }*/
+        labelsGroup.checkedChipIds.forEach{
+            hasSelectedChip = true
+        }
         if (hasError) {
             return
         }
-
-        /* val selectedLabels = ArrayList<LabelData>()
-         labelsGroup.checkedChipIds.forEach{
-             selectedLabels.add(findViewById<Chip>(it).tag as LabelData)
-         } */
         val selectedLabels = ArrayList<LabelData>()
+        labelsGroup.checkedChipIds.forEach{
+            selectedLabels.add(findViewById<Chip>(it).tag as LabelData)
+        }
         intent.putExtra("JOURNAL_ENTRY", JournalDataEntry(title, notes, selectedLabels, model.dbId))
         setResult(1, intent)
         finish()
+    }
+
+    private fun addLabelToGroup(label: LabelData) {
+        var labelChip = Chip(this)
+        labelChip.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor(label.color))
+        labelChip.text = label.name
+        labelChip.isFocusable = true
+        labelChip.isClickable = true
+        labelChip.isCheckable = true
+        labelChip.chipStrokeWidth = 5f
+        labelChip.id = View.generateViewId()
+        labelChip.chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black))
+        labelChip.tag = label
+        labelsGroup.addView(labelChip)
+    }
+
+    private fun loadChips() {
+        var labels = MainActivity.dataBase.viewLabelEntries()
+        labels.forEach() {
+            addLabelToGroup(it)
+        }
     }
 
 
