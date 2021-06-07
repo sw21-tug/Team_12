@@ -106,6 +106,7 @@ class ViewEntryActivity: AppCompatActivity() {
         //FIXME: Doesn't update new values
         findViewById<TextView>(R.id.title_view).text = dataEntry.title
         findViewById<TextView>(R.id.description_view).text = dataEntry.description
+        //findViewById<ChipGroup>(R.id.chips_view).tag = dataEntry.labels
         model = dataEntry
     }
 }
