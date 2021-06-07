@@ -17,7 +17,10 @@
     <string name="language_support">Language2</string>
     <string name="title_delete">Удалить подтверждение</string>
     <string name="description_delete">Вы действительно хотите удалить эту запись?</string>
+    <string name="description_cancel">Вы действительно хотите отменить редактирование?</string>
     <string name="settings">настройки</string>
+    <string name="agree">Дa</string>
+    <string name="disagree">Hет</string>
     <string-array name="languages_array">
         <item>English</item>
         <item>русский</item>
