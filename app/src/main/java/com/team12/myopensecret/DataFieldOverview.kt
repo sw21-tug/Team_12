@@ -124,6 +124,9 @@ class DataFieldOverview : AppCompatActivity() {
         dfLayout.findViewById<ImageView>(R.id.df_image).setOnClickListener {
             // TODO: EDIT
         }
+        dfLayout.findViewById<ImageView>(R.id.delete_df).setOnClickListener {
+            // TODO: EDIT
+        }
         dataList.addView(dfLayout, 0)
     }
 }
