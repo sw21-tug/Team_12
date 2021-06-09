@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -25,7 +26,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionBarToggle: ActionBarDrawerToggle
     private lateinit var navView: NavigationView
     private lateinit var addEntryButton: FloatingActionButton
-    private lateinit var entryList: LinearLayout
+    @VisibleForTesting
+    lateinit var entryList: LinearLayout
 
     companion object {
         lateinit var dataBase: DataBaseHelper

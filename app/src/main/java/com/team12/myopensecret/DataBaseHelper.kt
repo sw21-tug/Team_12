@@ -204,7 +204,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
         return lList
     }
 
-    private fun getDataFieldById(id:Int):DataFieldData? {
+    fun getDataFieldById(id:Int):DataFieldData? {
         if (id == -1)
             return null
         var db = this.readableDatabase
@@ -221,7 +221,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
         return null
     }
 
-    private fun getDataFielEntrydById(id:Int):DataFieldData? {
+    fun getDataFielEntrydById(id:Int):DataFieldData? {
         if (id == -1)
             return null
         var db = this.readableDatabase
@@ -267,7 +267,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
         return lList
     }
 
-    private fun getLabelById(id:Int):LabelData? {
+    fun getLabelById(id:Int):LabelData? {
         if (id == -1)
             return null
         var db = this.readableDatabase
