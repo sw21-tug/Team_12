@@ -4,9 +4,13 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewManager
+import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -22,6 +26,7 @@ class ViewEntryActivity: AppCompatActivity() {
     private lateinit var descriptionField:TextView
     private lateinit var chipsField:ChipGroup
     private lateinit var model: JournalDataEntry
+    private lateinit var dfs: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +37,15 @@ class ViewEntryActivity: AppCompatActivity() {
         descriptionField = findViewById(R.id.description_view)
         chipsField = findViewById(R.id.chips_view)
         val dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
+        dfs = findViewById(R.id.overview_data_list)
+        //var dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
         titleField.text = dataEntry.title
         descriptionField.text = dataEntry.description
         dataEntry.labels.forEach {
             addLabelToGroup(it, chipsField)
+        }
+        dataEntry.dfs.forEach {
+            addDf(it)
         }
         model = dataEntry
     }
@@ -108,5 +118,19 @@ class ViewEntryActivity: AppCompatActivity() {
         findViewById<TextView>(R.id.description_view).text = dataEntry.description
         //findViewById<ChipGroup>(R.id.chips_view).tag = dataEntry.labels
         model = dataEntry
+
+    private fun addDf(data: DataFieldData) {
+        var dfLayout: View = layoutInflater.inflate(R.layout.df_overview, dfs, false)
+        dfLayout.tag = data
+        dfLayout.findViewById<TextView>(R.id.df_o_name).text = (data.name)
+        val x = dfLayout.findViewById<TextView>(R.id.df_o_value)
+        val x2 = dfLayout.findViewById<CheckBox>(R.id.df_o_value2)
+        when(data.type) {
+            "2" -> {x.visibility = View.GONE; x2.visibility = View.VISIBLE; if (data.value == "true") x2.isChecked = true}
+            else -> {
+                x.text = data.value
+            }
+        }
+        dfs.addView(dfLayout, 0)
     }
 }
