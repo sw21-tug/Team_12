@@ -3,6 +3,7 @@
     <string name="tags">Tags</string>
     <string name="data_fields">Data Fields</string>
     <string name="new_entry">New Entry</string>
+    <string name="edit_entry">Edit Entry</string>
     <string name="title">Title</string>
     <string name="notes">Notes</string>
     <string name="add_field">Add Field</string>
@@ -15,6 +16,9 @@
     <string name="choosecategory">Please choose a category!</string>
     <string name="title_delete">Delete Confirmation</string>
     <string name="description_delete">Do you really want to delete this entry?</string>
+    <string name="description_cancel">Do you really want to cancel editing?</string>
+    <string name="agree">Yes</string>
+    <string name="disagree">No</string>
     <string name="df_delete">Do you really want to delete this data field?</string>
     <string name="language_support">Language</string>
     <string name="settings">Settings</string>
