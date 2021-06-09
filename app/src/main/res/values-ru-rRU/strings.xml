@@ -17,6 +17,7 @@
     <string name="language_support">Language2</string>
     <string name="title_delete">Удалить подтверждение</string>
     <string name="description_delete">Вы действительно хотите удалить эту запись?</string>
+    <string name="df_delete">Вы действительно хотите удалить это поле данных?</string>
     <string name="settings">настройки</string>
     <string name="add_to_new">символов заметки символов</string>
     <string name="data_type">заметки добавить эту</string>
