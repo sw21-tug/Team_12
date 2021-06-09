@@ -135,8 +135,9 @@ class DataFieldOverview : AppCompatActivity() {
             builder.setMessage(resources.getString(R.string.df_delete))
             builder.setPositiveButton(android.R.string.yes) { dialog, which ->
                MainActivity.dataBase.deleteDataField(data)
-                val intent = Intent(this, DataFieldOverview::class.java)
-                startActivityForResult(intent, 1)
+                recreate()
+               // val intent = Intent(this, DataFieldOverview::class.java)
+                //startActivityForResult(intent, 1)
             }
             builder.setNegativeButton(android.R.string.no) { dialog, which ->
             }
@@ -146,4 +147,5 @@ class DataFieldOverview : AppCompatActivity() {
         }
         dataList.addView(dfLayout, 0)
     }
+
 }
