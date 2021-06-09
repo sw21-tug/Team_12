@@ -24,6 +24,8 @@
     <string name="title_df">заки добить эт</string>
     <string name="new_df_entry">обить обить</string>
     <string name="df_name">эт добить эт</string>
+    <string name="choose_tag">добить добить</string>
+    <string name="all_option">эту Удалить</string>
     <string-array name="languages_array">
         <item>English</item>
         <item>русский</item>

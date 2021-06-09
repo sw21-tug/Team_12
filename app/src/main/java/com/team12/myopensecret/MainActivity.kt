@@ -11,7 +11,9 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.chip.Chip
@@ -25,10 +27,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionBarToggle: ActionBarDrawerToggle
     private lateinit var navView: NavigationView
     private lateinit var addEntryButton: FloatingActionButton
-    private lateinit var entryList: LinearLayout
+    @VisibleForTesting
+    lateinit var entryList: LinearLayout
+    private lateinit var labelButton: FloatingActionButton
 
     companion object {
         lateinit var dataBase: DataBaseHelper
+        private var currentTagFilter: String? = null
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         navView = findViewById(R.id.navView)
         addEntryButton = findViewById(R.id.add_entry_button)
         entryList = findViewById(R.id.entry_list)
-
+        labelButton = findViewById(R.id.fab1)
         dataBase =  DataBaseHelper(this)
 
         actionBarToggle = ActionBarDrawerToggle(this, drawerLayout, 0, 0)
@@ -82,6 +87,26 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        labelButton.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.choose_tag)
+            val y = ArrayList<String>()
+            dataBase.viewLabelEntries().forEach{
+                y.add(it.name)
+            }
+            y.add(resources.getString(R.string.all_option))
+            builder.setItems(y.toTypedArray()) { dialog, which ->
+                if (which >= dataBase.viewLabelEntries().size)
+                    currentTagFilter = null
+                else
+                    currentTagFilter = dataBase.viewLabelEntries()[which].name
+                recreate()
+            }
+
+// create and show the alert dialog
+            val dialog = builder.create()
+            dialog.show()
+        }
 
         createDefaultLabels() // delete later if labels can be created
         loadJournals()
@@ -92,6 +117,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         recreate()
+        currentTagFilter = null
         if (requestCode == 0 && resultCode == 1) {
             if (data != null) {
                 var dataEntry = data.extras?.getSerializable("JOURNAL_ENTRY") as JournalDataEntry
@@ -127,7 +153,17 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, 1)
 
         }
-        entryList.addView(journalView, 0)
+        if (currentTagFilter == null || hasLabelTag(data.labels))
+            entryList.addView(journalView, 0)
+    }
+
+    private fun hasLabelTag(labels: ArrayList<LabelData>): Boolean {
+        labels.forEach{
+            if (currentTagFilter != null && it.name == currentTagFilter) {
+                return true
+            }
+        }
+        return false
     }
 
     private fun addLabelToGroup(label: LabelData, chipGroup: ChipGroup) {
