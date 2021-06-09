@@ -331,4 +331,18 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,n
     }
 
     // LABEL update/delete should work the same
+
+   fun deleteDataField(id: DataFieldData):Int{
+        if (id.dfId == -1)
+            return -1
+
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(D_KEY_ID, id.dfId)
+
+        val success = db.delete(TABLE_DATAFIELDS,D_KEY_ID+"="+id.dfId,null)
+
+        db.close()
+        return success
+    }
 }
