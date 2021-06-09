@@ -1,6 +1,5 @@
 package com.team12.myopensecret
 
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -13,12 +12,10 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-
 
 class ViewEntryActivity: AppCompatActivity() {
 
@@ -36,9 +33,8 @@ class ViewEntryActivity: AppCompatActivity() {
         titleField = findViewById(R.id.title_view)
         descriptionField = findViewById(R.id.description_view)
         chipsField = findViewById(R.id.chips_view)
-        val dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
         dfs = findViewById(R.id.overview_data_list)
-        //var dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
+        var dataEntry = intent.extras?.getSerializable("data") as JournalDataEntry
         titleField.text = dataEntry.title
         descriptionField.text = dataEntry.description
         dataEntry.labels.forEach {
@@ -51,7 +47,7 @@ class ViewEntryActivity: AppCompatActivity() {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        /* if (item.itemId == R.id. delete_entry) {
+        if (item.itemId == R.id.delete_entry) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(resources.getString(R.string.title_delete))
             builder.setMessage(resources.getString(R.string.description_delete))
@@ -66,15 +62,8 @@ class ViewEntryActivity: AppCompatActivity() {
             builder.show()
         }
 
-        return super.onOptionsItemSelected(item)*/
-        if(item.itemId == R.id.edit_entry){
-            val intent = Intent(this, EditEntryActivity::class.java)
-            intent.putExtra("data", model)
-            startActivityForResult(intent, 0)
-        }
         return super.onOptionsItemSelected(item)
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -84,9 +73,8 @@ class ViewEntryActivity: AppCompatActivity() {
         menuInflater.inflate(R.menu.view_entry_action_bar, menu)
         return super.onCreateOptionsMenu(menu)
     }
-
     private fun addLabelToGroup(label: LabelData, chipGroup: ChipGroup) {
-        val labelChip = Chip(this)
+        var labelChip = Chip(this)
         labelChip.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor(label.color))
         labelChip.text = label.name
         labelChip.isClickable = false
@@ -94,31 +82,6 @@ class ViewEntryActivity: AppCompatActivity() {
         labelChip.chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black))
         chipGroup.addView(labelChip)
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        recreate()
-        if(requestCode == 0 && resultCode == 1) {
-            if (data != null) {
-                val dataEntry = data.extras?.getSerializable("JOURNAL_ENTRY") as JournalDataEntry
-                val suc = MainActivity.dataBase.updateEmployee(dataEntry)
-                if (suc == -1) {
-                    Toast.makeText(this, "Failed Inserting into Database", Toast.LENGTH_SHORT).show()
-                    return
-                }
-                updateView(dataEntry)
-            }
-        }
-    }
-
-    private fun updateView(dataEntry: JournalDataEntry) {
-
-        //FIXME: Doesn't update new values
-        findViewById<TextView>(R.id.title_view).text = dataEntry.title
-        findViewById<TextView>(R.id.description_view).text = dataEntry.description
-        //findViewById<ChipGroup>(R.id.chips_view).tag = dataEntry.labels
-        model = dataEntry
-
     private fun addDf(data: DataFieldData) {
         var dfLayout: View = layoutInflater.inflate(R.layout.df_overview, dfs, false)
         dfLayout.tag = data

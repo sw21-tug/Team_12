@@ -4,7 +4,6 @@
     <string name="tags">теги</string>
     <string name="data_fields">поля данных</string>
     <string name="new_entry">новая запись</string>
-    <string name="edit_entry">редактировать запись</string>
     <string name="title">заглавие</string>
     <string name="notes">заметки</string>
     <string name="add_field">добавить поле</string>
@@ -18,9 +17,6 @@
     <string name="language_support">Language2</string>
     <string name="title_delete">Удалить подтверждение</string>
     <string name="description_delete">Вы действительно хотите удалить эту запись?</string>
-    <string name="description_cancel">Вы действительно хотите отменить редактирование?</string>
-    <string name="agree">Дa</string>
-    <string name="disagree">Hет</string>
     <string name="df_delete">Вы действительно хотите удалить это поле данных?</string>
     <string name="settings">настройки</string>
     <string name="add_to_new">символов заметки символов</string>
