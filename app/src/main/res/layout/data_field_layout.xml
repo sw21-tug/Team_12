@@ -35,6 +35,13 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_baseline_edit_24" />
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:id="@+id/delete_df"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_delete_24" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"

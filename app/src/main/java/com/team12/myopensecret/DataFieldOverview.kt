@@ -17,6 +17,7 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AlertDialog
 
 class DataFieldOverview : AppCompatActivity() {
 
@@ -24,6 +25,9 @@ class DataFieldOverview : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
     private lateinit var actionBarToggle: ActionBarDrawerToggle
+    //private lateinit var model: DataFieldData
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,6 +128,24 @@ class DataFieldOverview : AppCompatActivity() {
         dfLayout.findViewById<ImageView>(R.id.df_image).setOnClickListener {
             // TODO: EDIT
         }
+        dfLayout.findViewById<ImageView>(R.id.delete_df).setOnClickListener {
+           //else if (item.itemId == R.id.delete_entry) {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(resources.getString(R.string.title_delete))
+            builder.setMessage(resources.getString(R.string.df_delete))
+            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+               MainActivity.dataBase.deleteDataField(data)
+                recreate()
+               // val intent = Intent(this, DataFieldOverview::class.java)
+                //startActivityForResult(intent, 1)
+            }
+            builder.setNegativeButton(android.R.string.no) { dialog, which ->
+            }
+
+            builder.show()
+       // }
+        }
         dataList.addView(dfLayout, 0)
     }
+
 }
