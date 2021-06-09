@@ -20,7 +20,7 @@ class EditEntryActivity : AppCompatActivity() {
     private lateinit var model: JournalDataEntry
     private lateinit var titleField: EditText
     private lateinit var notesField: EditText
-    private lateinit var entryList: LinearLayout
+    //private lateinit var entryList: LinearLayout
     private lateinit var labelsGroup: ChipGroup
 
     override fun onCreate(savedInstanceState: Bundle?) {

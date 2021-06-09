@@ -37,7 +37,7 @@
             android:scrollbars="horizontal">
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/editChips"
+                android:id="@+id/edit_chips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
