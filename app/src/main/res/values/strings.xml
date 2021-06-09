@@ -15,6 +15,7 @@
     <string name="choosecategory">Please choose a category!</string>
     <string name="title_delete">Delete Confirmation</string>
     <string name="description_delete">Do you really want to delete this entry?</string>
+    <string name="df_delete">Do you really want to delete this data field?</string>
     <string name="language_support">Language</string>
     <string name="settings">Settings</string>
     <string name="add_to_new">Always add to new entries</string>
