@@ -27,21 +27,24 @@
             android:text="Example text"
             android:fontFamily="sans-serif-condensed-medium"/>
         <ImageView
+            android:id="@+id/tag_color"
             android:layout_gravity="center"
             android:layout_margin="15dp"
-            android:id="@+id/tag_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_baseline_edit_24" />
+            android:src="@drawable/ic_baseline_edit_24"
+            android:tint="@color/red"
+            tools:ignore="DuplicateIds" />
+
         <ImageView
             android:layout_gravity="center"
             android:layout_margin="15dp"
             android:id="@+id/tag_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:tint="@color/light_grey"
             android:src="@drawable/ic_baseline_delete_24"
             tools:ignore="DuplicateIds" />
-
 
     </LinearLayout>
     <View
