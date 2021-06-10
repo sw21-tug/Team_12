@@ -1,5 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="delete_tag" type="id" />
-    <item name="cancel_deleting_tag" type="id" />
-</resources>
+<resources></resources>
