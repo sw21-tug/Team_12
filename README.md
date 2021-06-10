@@ -36,7 +36,6 @@ Data protection is important - no internet capabilities and local data is stored
 Add entries, 
 Entry Overview, 
 View Entries, 
-Delete Entries, 
 Tag Entries, 
 Russian Language Support, 
 App Menu, 
@@ -45,3 +44,5 @@ Tag Overview,
 Add Custom Data Field, 
 Data Field Overview
 Filter by Tag
+Deletion Confirmation
+Delete Data Fields
