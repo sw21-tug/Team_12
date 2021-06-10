@@ -15,7 +15,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="70dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Title"
+        android:text="New Tag"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
@@ -26,14 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </com.google.android.material.chip.ChipGroup>
-
-    <LinearLayout
-        android:id="@+id/overview_data_list"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-    </LinearLayout>
-
     <TextView
         android:id="@+id/description_view"
         android:layout_width="wrap_content"
@@ -42,7 +34,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="70dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Preview of first few words rally long text testing some things"
+        android:text="Name"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 </LinearLayout>

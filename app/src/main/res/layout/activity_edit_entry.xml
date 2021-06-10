@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
-    tools:context=".NewEntryActivity">
+    tools:context=".EditEntryActivity">
 
     <LinearLayout
         android:background="@drawable/fade_background"
@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/title_field"
+            android:id="@+id/edit_title"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
@@ -25,6 +25,7 @@
             android:drawablePadding="12dp"
             android:maxLength="60"
             android:hint="Title"
+            android:inputType="text"
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />
 
@@ -36,8 +37,8 @@
             android:scrollbars="horizontal">
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipsPrograms"
-                android:layout_width="match_parent"
+                android:id="@+id/edit_chips"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:paddingStart="8dp"
@@ -46,12 +47,35 @@
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
-        <LinearLayout
-            android:id="@+id/new_data_list"
+        <EditText
+            android:id="@+id/customfield_one"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-        </LinearLayout>
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/custom_edit_text"
+            android:drawableStart="@drawable/selector_title"
+            android:drawablePadding="12dp"
+            android:hint="Custom Field"
+            android:maxLength="60"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+
+        <EditText
+            android:id="@+id/customfield_two"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/custom_edit_text"
+            android:drawableStart="@drawable/selector_title"
+            android:drawablePadding="12dp"
+            android:hint="Custom Field"
+            android:maxLength="60"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
 
         <EditText
             android:id="@+id/notes_field"
@@ -63,8 +87,8 @@
             android:background="@drawable/custom_edit_text"
             android:drawableStart="@drawable/selector_notes"
             android:drawablePadding="12dp"
-            android:maxLength="1000"
             android:hint="Notes"
+            android:maxLength="1000"
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />
 
@@ -72,20 +96,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <com.google.android.material.button.MaterialButton
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="16dp"
-            android:id="@+id/add_df"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_field"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_attachment"/>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="200dp"
+                android:text="@string/add_field" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="200dp"
+                android:text="@string/add_attachment" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tag_color"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_shape"
+            android:layout_width="40dp"
+            android:layout_margin="15dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:id="@+id/tag_name"
+            android:textSize="25sp"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Example text"
+            android:fontFamily="sans-serif-condensed-medium"/>
+        <ImageView
+            android:id="@+id/tag_color"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:tint="@color/red"
+            tools:ignore="DuplicateIds" />
+
+        <ImageView
+            android:id="@+id/tag_image"
+            android:layout_width="40dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:tint="@color/light_grey"
+            tools:ignore="DuplicateIds" />
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_grey"/>
+</LinearLayout>

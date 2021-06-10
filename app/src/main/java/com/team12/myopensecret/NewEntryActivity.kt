@@ -4,21 +4,27 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
+import android.view.ViewManager
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+
 
 class NewEntryActivity : AppCompatActivity() {
 
     private lateinit var titleField: EditText
     private lateinit var notesField: EditText
     private lateinit var labelsGroup: ChipGroup
+    private lateinit var addDF: MaterialButton
+    private lateinit var newList: LinearLayout
+    private var currentList= ArrayList<View>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +34,31 @@ class NewEntryActivity : AppCompatActivity() {
         setTitle(R.string.new_entry)
         titleField = findViewById(R.id.title_field)
         notesField = findViewById(R.id.notes_field)
+        addDF = findViewById(R.id.add_df)
+        newList = findViewById(R.id.new_data_list)
+        val x = MainActivity.dataBase.viewDataFieldEntries()
+        x.forEach{
+            if (it.alwaysAdd == "true")
+                addDF(it)
+        }
+        if (x.isEmpty())
+            addDF.isEnabled = false
+        addDF.setOnClickListener{
+
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.title_df)
+            val y = ArrayList<String>()
+            x.forEach{ z ->
+                y.add(z.name)
+            }
+            builder.setItems(y.toTypedArray()) { dialog, which ->
+                addDF(x[which])
+            }
+
+// create and show the alert dialog
+            val dialog = builder.create()
+            dialog.show()
+        }
         labelsGroup = findViewById(R.id.chipsPrograms)
         titleField.setHint(R.string.title)
         notesField.setHint(R.string.notes)
@@ -53,6 +84,36 @@ class NewEntryActivity : AppCompatActivity() {
         labelChip.chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black))
         labelChip.tag = label
         labelsGroup.addView(labelChip)
+    }
+
+    private fun addDF(data: DataFieldData) {
+        if (isInList(data))
+            return
+        var dfLayout: View = layoutInflater.inflate(R.layout.add_df_layout, newList, false)
+        dfLayout.tag = data
+        dfLayout.findViewById<TextView>(R.id.df_new_name).text = (data.name)
+        val x = dfLayout.findViewById<TextView>(R.id.df_new_value)
+        val x2 = dfLayout.findViewById<TextView>(R.id.df_new_value2)
+        when(data.type) {
+            "0" -> x.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+            "2" -> {x.visibility = View.GONE; x2.visibility = View.VISIBLE}
+            else -> {}
+        }
+        dfLayout.findViewById<ImageView>(R.id.delete_df).setOnClickListener {
+            (dfLayout.parent as ViewManager).removeView(dfLayout)
+            currentList.remove(dfLayout)
+        }
+        newList.addView(dfLayout, 0)
+        currentList.add(dfLayout)
+    }
+
+    private fun isInList(data: DataFieldData):Boolean {
+        currentList.forEach{
+            val s = it.tag as DataFieldData
+            if (s.dfId == data.dfId)
+                return true
+        }
+        return false
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -102,7 +163,22 @@ class NewEntryActivity : AppCompatActivity() {
         labelsGroup.checkedChipIds.forEach{
             selectedLabels.add(findViewById<Chip>(it).tag as LabelData)
         }
-        intent.putExtra("JOURNAL_ENTRY", JournalDataEntry(title,notes,selectedLabels, -1))
+        var selectedDataFields = ArrayList<DataFieldData>()
+        currentList.forEach{
+            val x = it.tag as DataFieldData
+            val y = it.findViewById<EditText>(R.id.df_new_value)
+            if (x.type == "2" || y.text.isNotEmpty()) {
+
+                if (x.type == "2")
+                    x.value = it.findViewById<CheckBox>(R.id.df_new_value2).isChecked.toString()
+                else {
+                    var z = y.text.toString().trim()
+                    x.value = z
+                }
+                selectedDataFields.add(x)
+            }
+        }
+        intent.putExtra("JOURNAL_ENTRY", JournalDataEntry(title, notes, selectedLabels, selectedDataFields, -1))
         setResult(1, intent)
         finish()
     }
